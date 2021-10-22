@@ -14,13 +14,16 @@ Android 常用布局：
 
 ### 常用属性
 
-* android:id
-* android:layout_width
-* android:layout_height
-* android:background
-* android:layout_margin
-* android:layout_padding
-* android:orientation
+* `android:id`
+* `android:layout_width` 宽
+* `android:layout_height` 高
+* `android:background` 背景
+* `android:layout_margin` 外边距
+* `android:layout_padding` 内边距
+* `android:orientation` 方向
+* `android:gravity` 子元素在 **LinearLayout** 中的对齐方式
+* `android:layout_weight`
+* `android:baselineAligned` 当设置为**false**时，防止布局对齐其子元素的基线。  
 
 ## RelativeLayout 相对布局
 
