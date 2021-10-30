@@ -115,7 +115,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Debug
 import android.util.Log
-import android.view.View刻
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import xin.z10.myapplication.R.layout.activity_main as activity_main1
