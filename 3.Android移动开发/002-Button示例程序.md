@@ -67,6 +67,8 @@
 
 ## MainActivity.kt (v1.0)
 
+该种方式实在 `xml` 中直接指定 `android:onClick`，来指定单击处理函数。
+
 ```kotlin
 package xin.z10.myapplication
 
@@ -103,6 +105,8 @@ class MainActivity : AppCompatActivity() {
 
 ## MainActivity.kt (v1.1)
 
+该种方式是先获取目标对象，然后给该对象设置 `setOnClickListener` 监听。
+
 ```kotlin
 package xin.z10.myapplication
 
@@ -111,7 +115,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Debug
 import android.util.Log
-import android.view.View
+import android.view.View刻
 import android.widget.Button
 import android.widget.TextView
 import xin.z10.myapplication.R.layout.activity_main as activity_main1

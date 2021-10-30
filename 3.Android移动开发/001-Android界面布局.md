@@ -21,9 +21,11 @@ Android 常用布局：
 * `android:layout_margin` 外边距
 * `android:layout_padding` 内边距
 * `android:orientation` 方向
-* `android:gravity` 子元素在 **LinearLayout** 中的对齐方式
+* `android:gravity`  **LinearLayout** 中子元素的对齐方式(用在 LinearLayout上)
+* `android:layout_gravity` 当前元素在父 LinearLayout 中的对齐方式（用在 LinearLayout的子元素上）
 * `android:layout_weight`
 * `android:baselineAligned` 当设置为**false**时，防止布局对齐其子元素的基线。  
+* 
 
 ## RelativeLayout 相对布局
 
