@@ -590,42 +590,114 @@ endif()
 
 
 
-## 单文件例子
+## CMake 项目结构
+
+CMake 的 CMakeLists.txt 放在项目的根目录。运行 cmake 在根目录的 build 文件夹下。
+
+### Hello,World 示例
+
+项目结构：
+
+```shell
+.
+├── CMakeLists.txt
+├── Makefile
+└── src
+    ├── CMakeLists.txt
+    └── main.c
+
+1 directory, 4 files
+```
+
+`./CMakeLists.txt`
 
 ```cmake
 cmake_minimum_required(VERSION 3.4.1)
 
 project(demo)
 
-add_executable(${PROJECT_NAME} src/main.c)
+add_subdirectory(./src)
 ```
 
-## 多文件例子
+`./src/CMakeLists.txt`
 
 ```cmake
-cmake_minimum_required(VERSION 3.4.1)
+aux_source_directory(./ SRC_DIR)
 
-project(demo)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
-add_executable(${PROJECT_NAME} src/main.c src/fun.c)
+add_executable(${PROJECT_NAME} ${SRC_DIR})
 ```
 
-这个例子只是在上一个例子的基础上增加了 'src/fun.c' 文件，更好的做法是让cmake 自动查找指定目录下的所有源文件。
+`./src/main.c`
 
-```aux_source_directory(<dir> <variable>)```
+```c
+#include <stdio.h>
 
-新的 CMakeList.txt
-
-```cmake
-cmake_minimum_required(VERSION 3.4.1)
-
-project(demo)
-
-# 把当前目录下的所有源文件保存到变量 DIR_SRCS 中
-aux_source_directory(. DIR_SRCS)
-
-add_executable(${PROJECT_NAME} ${DIR_SRCS})
+int main(void)
+{
+    printf("Hello,World!\n");
+    return 0;
+}
 ```
 
+`./Makefile`
 
+```makefile
+build_dir = ./build
+bin_dir = $(build_dir)/bin
+exe_name = demo # 与 CMakeLists.txt 中的 PROJECT_NAME 一致
+
+all: build
+	cd $(build_dir); make; cd bin; ./$(exe_name)
+
+clean:
+	rm -rf $(build_dir)
+
+run:
+	@echo "=================== 程序运行结果：========================="
+	@cd $(bin_dir); ./$(exe_name)
+
+build:
+	mkdir $(build_dir); cd $(build_dir); cmake ..
+
+```
+
+### make 命令输出结果
+
+```shell
+utu90@DESKTOP-N95R1I7:$ make
+mkdir ./build; cd ./build; cmake ..
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/utu90/CExample/cmake_demo/cmake_pro_struct/build
+cd ./build; make; cd bin; ./demo
+make[1]: Entering directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+make[2]: Entering directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+make[3]: Entering directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+Scanning dependencies of target demo
+make[3]: Leaving directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+make[3]: Entering directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+[ 50%] Building C object src/CMakeFiles/demo.dir/main.c.o
+[100%] Linking C executable ../bin/demo
+make[3]: Leaving directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+[100%] Built target demo
+make[2]: Leaving directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+make[1]: Leaving directory '/home/utu90/CExample/cmake_demo/cmake_pro_struct/build'
+Hello,World!
+```
 
